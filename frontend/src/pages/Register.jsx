@@ -1,35 +1,31 @@
-import React, { useState } from 'react';
-import API from '../services/api';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "../api/axios";
 
-function Register() {
-  const [form, setForm] = useState({ username: '', password: '' });
-  const navigate = useNavigate();
+const Register = () => {
+  const [form, setForm] = useState({ username: "", password: "", email: "" });
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      await API.post('/api/register/', form);
-      navigate('/login');
-    } catch (err) {
-      alert('Registration failed');
-    }
+    axios.post("/auth/register/", form)
+      .then(res => alert("Registered successfully!"))
+      .catch(err => console.error("Registration error", err));
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
-      <h2 className="text-2xl font-bold mb-4">Register</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input name="username" onChange={handleChange} value={form.username} placeholder="Username" className="w-full p-2 border rounded" />
-        <input name="password" type="password" onChange={handleChange} value={form.password} placeholder="Password" className="w-full p-2 border rounded" />
-        <button type="submit" className="bg-primary text-white px-4 py-2 rounded">Register</button>
+    <div className="p-4 max-w-md mx-auto">
+      <h2 className="text-xl font-bold mb-4">Register</h2>
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <input name="username" value={form.username} onChange={handleChange} placeholder="Username" className="w-full p-2 border rounded" />
+        <input name="email" value={form.email} onChange={handleChange} placeholder="Email" className="w-full p-2 border rounded" />
+        <input name="password" type="password" value={form.password} onChange={handleChange} placeholder="Password" className="w-full p-2 border rounded" />
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Register</button>
       </form>
     </div>
   );
-}
+};
 
 export default Register;

@@ -5,3 +5,12 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
 })
+
+//import { defineConfig } from 'vite'
+//import dns from 'node:dns'
+
+//dns.setDefaultResultOrder('verbatim')
+
+//export default defineConfig({
+  // omit
+//})

@@ -18,6 +18,7 @@ function Header() {
           <Link to="/login" className="hover:underline">Login</Link>
           <Link to="/dashboard" className="hover:underline">Dashboard</Link>
         </nav>
+        
       </div>
     </motion.header>
   );
