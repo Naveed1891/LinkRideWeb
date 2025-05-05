@@ -1,4 +1,4 @@
-# 🚗 LinkRide
+# 🚗 LinkRide Web-Application
 
 **LinkRide** is a full-stack ride-sharing web application for campus students, built using **Django (Backend)** and **React + Vite + TailwindCSS (Frontend)**.  
 Students can offer or join rides, register/login securely using JWT authentication, and access a modern UI.
