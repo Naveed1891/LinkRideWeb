@@ -1,18 +1,25 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
 class Ride(models.Model):
-    driver_name = models.CharField(max_length=100)
+    driver = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='rides_posted'
+    )
     source = models.CharField(max_length=100)
     destination = models.CharField(max_length=100)
     time = models.DateTimeField()
+    seats_available = models.IntegerField(default=1)
+    created_at = models.DateTimeField(auto_now_add=True)
+    passengers = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name='rides_joined',
+        blank=True
+    )
 
     def __str__(self):
-        return f"{self.driver_name}: {self.source} to {self.destination}"
+        return f"{self.source} to {self.destination} by {self.driver.username}"
 
-class RideParticipant(models.Model):
-    ride = models.ForeignKey(Ride, related_name='participants', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.user.username} joined {self.ride}"
+    def remaining_seats(self):
+        return self.seats_available - self.passengers.count()

@@ -1,9 +1,12 @@
 from django.urls import path
-from .views import RegisterView, RideListView
-from rest_framework_simplejwt.views import TokenObtainPairView
+from .views import (
+    RidePostView, RideJoinView, PostedRidesView, JoinedRidesView, CancelRideView
+)
 
 urlpatterns = [
-    path('register/', RegisterView.as_view(), name='register'),  # POST: register
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # POST: login
-    path('rides/', RideListView.as_view(), name='ride_list'),  # GET: list, POST: create
+    path('rides/', RidePostView.as_view(), name='ride-post'),
+    path('rides/<int:ride_id>/join/', RideJoinView.as_view(), name='ride-join'),
+    path('rides/posted/', PostedRidesView.as_view(), name='posted-rides'),
+    path('rides/joined/', JoinedRidesView.as_view(), name='joined-rides'),
+    path('rides/<int:ride_id>/cancel/', CancelRideView.as_view(), name='ride-cancel'),
 ]
